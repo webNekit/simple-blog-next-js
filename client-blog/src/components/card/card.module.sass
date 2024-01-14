@@ -1,3 +1,6 @@
+.card_list
+    container-type: inline-size
+    
 .card
     display: flex
     gap: 30px
@@ -25,3 +28,14 @@
     justify-content: center
     padding: 30px 30px 30px 0px
      
+@container (max-width: 700px)
+    .card
+        flex-direction: column 
+    .card_contentWrap
+        padding: 0px 30px 30px
+    .card_label
+        font-size: 16px
+    .card_title
+        font-size: 24px
+    .card_text
+        display: none
