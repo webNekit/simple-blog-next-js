@@ -1,7 +1,9 @@
+import Card from "@/components/card/card";
+
 export default function Home() {
   return (
-    <div>
-      <h1>hello</h1>
+    <div className="container pb-80">
+      <Card />
     </div>
   )
 }
