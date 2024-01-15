@@ -362,6 +362,55 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiBlogBlog extends Schema.CollectionType {
+  collectionName: 'blogs';
+  info: {
+    singularName: 'blog';
+    pluralName: 'blogs';
+    displayName: '\u0411\u043B\u043E\u0433';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+        maxLength: 255;
+      }>;
+    Category: Attribute.Enumeration<
+      [
+        '\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435',
+        '\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435',
+        '\u0414\u0438\u0437\u0430\u0439\u043D',
+        '\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0441\u0441\u044B\u043B\u043A\u0438'
+      ]
+    > &
+      Attribute.Required;
+    Summary: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+        maxLength: 255;
+      }>;
+    IsFeatured: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    Thumbnail: Attribute.Media & Attribute.Required;
+    FeaturedImage: Attribute.Media & Attribute.Required;
+    Content: Attribute.RichText & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -778,6 +827,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::blog.blog': ApiBlogBlog;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
