@@ -8,7 +8,7 @@ export default function card(props) {
     <div className={`${styles.card_list} ${props.className || ''}`}>
       <div className={styles.card}>
         <div className={styles.card_imageWrap}>
-          <Image src="/img_1.jpeg" className={styles.card_image} alt="" fill={true} />
+          <Image src={props.imgSrc} className={styles.card_image} alt="" fill={true} />
         </div>
         <div className={styles.card_contentWrap}>
           <ConditialRender condition={props.label}>

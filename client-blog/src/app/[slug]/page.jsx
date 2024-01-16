@@ -1,7 +1,24 @@
 import Image from "next/image";
 import styles from "@/app/[slug]/style.module.sass";
 
-export default function page() {
+const fetchBlogs = async(params) => {
+    const reqOptions = {
+        headers: {
+            Authorization: `Bearer ${process.env.API_TOKEN}`
+        }
+    };
+    const request = await fetch(`${process.env.API_URL}/blogs?populate=*&${params}`, reqOptions);
+    const response = await request.json();
+
+    return response;
+}
+
+const Page = async() => {
+  const [featuredBlog, blogs] = Promise.all([
+    await fetchBlogs('filters[IsFeatured][$eq]=true'),
+    await fetchBlogs('filters[IsFeatured][$eq]=false'),
+  ]);
+
   return (
     <div className="container pb-80">
         <div className="row">
@@ -21,3 +38,5 @@ export default function page() {
     </div>
   )
 }
+
+export default Page;
